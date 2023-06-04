@@ -158,11 +158,11 @@ static char usbd_serial_str[PICO_UNIQUE_BOARD_ID_SIZE_BYTES * 2 + 1];
 // array of pointer to string descriptors
 char const *string_desc_arr[] = {
     (const char[]){0x09, 0x04}, // 0: is supported language is English (0x0409)
-    "TinyUSB",                  // 1: Manufacturer
-    "TinyUSB Device",           // 2: Product
+    "PedalBox",                 // 1: Manufacturer
+    "PedalBox Device",          // 2: Product
     usbd_serial_str,            // 3: Serials, should use chip ID
-    "TinyUSB CDC",              // 4: CDC Interface
-    "TinyUSB HID",              // 5: CDC Interface
+    "PedalBox CDC",             // 4: CDC Interface
+    "PedalBox HID",             // 5: HID Interface
 };
 
 static uint16_t _desc_str[32];

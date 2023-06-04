@@ -158,7 +158,7 @@ static void send_hid_report(uint8_t report_id, uint32_t btn)
             report.hat = GAMEPAD_HAT_UP;
             report.buttons = GAMEPAD_BUTTON_A;
             tud_hid_report(REPORT_ID_GAMEPAD, &report, sizeof(report));
-
+            // https://github.com/hathach/tinyusb/blob/c7686f8d5e98660137ef176d35bc8a82f63675f3/src/class/hid/hid_device.c#L149
             has_gamepad_key = true;
         }
         else
@@ -167,6 +167,7 @@ static void send_hid_report(uint8_t report_id, uint32_t btn)
             report.buttons = 0;
             if (has_gamepad_key)
                 tud_hid_report(REPORT_ID_GAMEPAD, &report, sizeof(report));
+            // https://github.com/hathach/tinyusb/blob/c7686f8d5e98660137ef176d35bc8a82f63675f3/src/class/hid/hid_device.c#L149
             has_gamepad_key = false;
         }
     }
