@@ -106,6 +106,9 @@ static void uart_task(void)
     case 'P':
         printf("UART: Hello, world!\n");
         break;
+    case 't':
+        printf("UART: test!\n");
+        break;
     default:
         // Ignore
         break;
