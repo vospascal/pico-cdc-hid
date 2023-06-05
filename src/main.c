@@ -144,17 +144,17 @@ static void uart_task(void)
     case '1':
         // adc_set_round_robin
         adc_select_input(0);
-        int result1 = (int)adc_read();
+        uint result1 = adc_read();
         printf("Raw bit value 1 : %d \n", result1);
         break;
     case '2':
         adc_select_input(1);
-        int result2 = (int)adc_read();
+        uint result2 = adc_read();
         printf("Raw bit value 2 : %d \n", result2);
         break;
     case '3':
         adc_select_input(2);
-        int result3 = (int)adc_read();
+        uint result3 = adc_read();
         printf("Raw bit value 3 : %d \n", result3);
         break;
     default:
