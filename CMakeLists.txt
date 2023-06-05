@@ -54,6 +54,7 @@ target_link_libraries(
     pico_unique_id
     pico_usb_reset_interface
     tinyusb_device
+    hardware_adc
 )
 
 # Create map/bin/hex/uf2 file etc.

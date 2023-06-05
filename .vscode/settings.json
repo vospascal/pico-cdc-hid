@@ -2,6 +2,8 @@
   "files.associations": {
     "unique_id.h": "c",
     "board.h": "c",
-    "usb_descriptors.h": "c"
+    "usb_descriptors.h": "c",
+    "gpio.h": "c",
+    "stdio.h": "c"
   }
 }

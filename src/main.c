@@ -17,6 +17,10 @@
 #include "tusb.h"
 #include <usb_descriptors.h>
 
+#include "pico/stdlib.h"
+#include "hardware/gpio.h"
+#include "hardware/adc.h"
+
 // temp
 uint32_t board_button_read(void)
 {
@@ -34,6 +38,12 @@ int main()
 {
     // stdio_init_all();
     stdio_uart_init();
+
+    printf("ADC Example, measuring GPIO26\n");
+    adc_init();
+    adc_gpio_init(26);
+    adc_gpio_init(27);
+    adc_gpio_init(28);
 
     // init device stack on configured root-hub port
     tud_init(BOARD_TUD_RHPORT);
@@ -103,27 +113,49 @@ static void cdc_task(void)
     }
 }
 
+// char *serialInput()
+// {
+//     char *buffer; // 0-225
+//     int buffer_index = 0;
+//     char new_char = getchar_timeout_us(0);
+//     while (new_char != PICO_ERROR_TIMEOUT && (new_char != '\n' || new_char == '\r'))
+//     {
+//         buffer[buffer_index++] = (char)new_char;
+//     }
+//     return buffer;
+// }
+
 static void uart_task(void)
 {
     char input = getchar_timeout_us(0);
     switch (input)
     {
     case 'r':
-    case 'R':
         printf("UART: Restart\n");
         watchdog_enable(100, false);
         break;
     case 'b':
-    case 'B':
         printf("UART: Bootsel mode\n");
         reset_usb_boot(0, 0);
         break;
     case 'p':
-    case 'P':
         printf("UART: Hello, world!\n");
         break;
-    case 't':
-        printf("UART: test!\n");
+    case '1':
+        // adc_set_round_robin
+        adc_select_input(0);
+        int result1 = (int)adc_read();
+        printf("Raw bit value 1 : %d \n", result1);
+        break;
+    case '2':
+        adc_select_input(1);
+        int result2 = (int)adc_read();
+        printf("Raw bit value 2 : %d \n", result2);
+        break;
+    case '3':
+        adc_select_input(2);
+        int result3 = (int)adc_read();
+        printf("Raw bit value 3 : %d \n", result3);
         break;
     default:
         // Ignore
