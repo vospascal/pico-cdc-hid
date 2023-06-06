@@ -4,6 +4,10 @@
     "board.h": "c",
     "usb_descriptors.h": "c",
     "gpio.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "string": "c",
+    "string.h": "c",
+    "stdlib.h": "c",
+    "unistd.h": "c"
   }
 }

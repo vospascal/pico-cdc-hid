@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <unistd.h>
+
 #include "bsp/board.h"
 #include "tusb.h"
 #include <usb_descriptors.h>
@@ -113,23 +115,49 @@ static void cdc_task(void)
     }
 }
 
-// char *serialInput()
-// {
-//     char *buffer; // 0-225
-//     int buffer_index = 0;
-//     char new_char = getchar_timeout_us(0);
-//     while (new_char != PICO_ERROR_TIMEOUT && (new_char != '\n' || new_char == '\r'))
-//     {
-//         buffer[buffer_index++] = (char)new_char;
-//     }
-//     return buffer;
-// }
+char *readInput()
+{
+    int i = 0;
+    char ch;
+    char *str = (char *)malloc(sizeof(char) * 63);
+
+    while ((ch = getchar()) != '\r' && ch != '\n' && ch != EOF)
+    {
+        if (i < 63)
+        {
+            str[i++] = ch;
+            printf("%c\n", ch); // For debugging. Returns the correct character.
+        }
+    }
+    str[i] = '\0';
+    printf("%s\n", str); // For debugging. Returns the entered string.
+
+    return str;
+}
 
 static void uart_task(void)
 {
+
+    // char *input = readInput();
+
+    // if (strcmp(input, "hello") == 0)
+    // {
+    //     printf("Input matches 'hello'\n");
+    // }
+
+    // if (strcmp(input, "b") == 0)
+    // {
+    //     printf("UART: Bootsel mode\n");
+    //     reset_usb_boot(0, 0);
+    // }
+    // free(input); // Remember to free the allocated memory
+
     char input = getchar_timeout_us(0);
     switch (input)
     {
+    case 'p':
+        printf("UART: Hello, world!\n");
+        break;
     case 'r':
         printf("UART: Restart\n");
         watchdog_enable(100, false);
@@ -138,9 +166,7 @@ static void uart_task(void)
         printf("UART: Bootsel mode\n");
         reset_usb_boot(0, 0);
         break;
-    case 'p':
-        printf("UART: Hello, world!\n");
-        break;
+
     case '1':
         // adc_set_round_robin
         adc_select_input(0);
